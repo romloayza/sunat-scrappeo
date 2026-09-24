@@ -4,14 +4,14 @@ import json
 import httpx
 
 # ---------- CONFIGURA ESTO ----------
-INPUT_CSV = "data/rucs_unicos.csv"
+INPUT_JSON = "data/rucs.json"
 RUC_COLUMN = "RUC"              # <-- cambia esto al nombre real de la columna en tu CSV
 OUTPUT_JSON = "data/resultados_rucs.json"
 CONCURRENCIA_MAXIMA = 5         # cuántas peticiones en simultáneo (súbelo/bájalo según cómo responda SUNAT)
 DELAY_SEGUNDOS = 0.5            # pausa por petición para no saturar el servidor
 GUARDAR_CADA = 50               # guarda progreso cada N resultados (por si se corta el proceso)
 
-TOKEN = "42qbxo7i9t8zdva1im6geolkygf3gmirpcl9s8wv49lmt5qndmoq"
+TOKEN = "ivo4zbzeq24890kz9pa7gwjb4k1hti0raycm8h2obk61bt69u8vj"
 URL = "https://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias"
 HEADERS = {
     "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
@@ -22,21 +22,62 @@ HEADERS = {
 # -------------------------------------
 
 
-def leer_rucs(path: str) -> list[str]:
-    """Lee la columna de RUCs del CSV y devuelve una lista de strings sin duplicados/vacíos."""
+def leer_rucs_json(path: str) -> list[str]:
+    """Lee los RUC desde un archivo JSON."""
+
+    with open(path, "r", encoding="utf-8") as f:
+        datos = json.load(f)
+
     rucs = []
-    with open(path, newline="", encoding="utf-8-sig") as f:
-        reader = csv.DictReader(f)
-        if RUC_COLUMN not in reader.fieldnames:
-            raise ValueError(
-                f"La columna '{RUC_COLUMN}' no existe en el CSV. "
-                f"Columnas encontradas: {reader.fieldnames}"
-            )
-        for row in reader:
-            ruc = (row.get(RUC_COLUMN) or "").strip()
+
+    # Formato:
+    # ["20604434972", "20600340230", ...]
+    if isinstance(datos, list):
+
+        for item in datos:
+
+            if isinstance(item, (str, int)):
+                ruc = str(item).strip()
+
+            elif isinstance(item, dict):
+                ruc = str(
+                    item.get("RUC")
+                    or item.get("ruc")
+                    or ""
+                ).strip()
+
+            else:
+                continue
+
             if ruc:
                 rucs.append(ruc)
-    return rucs
+
+    # También acepta:
+    # {"rucs": [...]}
+    elif isinstance(datos, dict):
+
+        lista = datos.get("rucs", [])
+
+        for item in lista:
+
+            if isinstance(item, (str, int)):
+                ruc = str(item).strip()
+
+            elif isinstance(item, dict):
+                ruc = str(
+                    item.get("RUC")
+                    or item.get("ruc")
+                    or ""
+                ).strip()
+
+            else:
+                continue
+
+            if ruc:
+                rucs.append(ruc)
+
+    # quitar duplicados
+    return list(dict.fromkeys(rucs))
 
 
 async def consultar_ruc(client: httpx.AsyncClient, ruc: str, semaforo: asyncio.Semaphore) -> dict:
@@ -72,7 +113,7 @@ def guardar(resultados: list[dict]) -> None:
 
 
 async def main():
-    rucs = leer_rucs(INPUT_CSV)
+    rucs = leer_rucs_json(INPUT_JSON)
     print(f"RUCs a consultar: {len(rucs)}")
 
     semaforo = asyncio.Semaphore(CONCURRENCIA_MAXIMA)
