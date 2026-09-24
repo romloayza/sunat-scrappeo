@@ -44,12 +44,8 @@ La base comprende los años 2021, 2022 y 2024 y combina información de contrata
 | `actividades_economicas` | Texto | Listado completo de actividades económicas registradas para la empresa. |
 | `sanciones_tcp_acum` | Entero | Número acumulado de sanciones del Tribunal de Contrataciones Públicas disponible en la fuente de proveedores. |
 | `penalidades_acum` | Entero | Número acumulado de penalidades disponible para el proveedor. |
-| `inhabilitacion_judicial` | Entero / binaria | Registro de inhabilitación por mandato judicial disponible en la fuente. |
-| `inhabilitacion_administrativa` | Entero / binaria | Registro de inhabilitación administrativa disponible en la fuente. |
-| `fecha_consulta_sunat` | Fecha/hora | Fecha en que se realizó la consulta del RUC en SUNAT. |
-| `sunat_ok` | Binaria | Indicador de procesamiento de la consulta SUNAT. |
-| `tiene_info_sunat` | Binaria | Indicador de disponibilidad de información del RUC en la fuente SUNAT utilizada. |
-| `tiene_info_proveedores_estado` | Binaria | Indicador de disponibilidad del RUC en la fuente de proveedores del Estado. |
+| `inhabilitacion_judicial` | Entero | Registro de inhabilitación por mandato judicial disponible en la fuente. |
+| `inhabilitacion_administrativa` | Entero | Registro de inhabilitación administrativa disponible en la fuente. |
 | `puntaje_inco` | Numérica | Puntaje INCO correspondiente al GORE y año de la observación. |
 | `rango_inco` | Categórica | Rango asociado al puntaje INCO de la edición correspondiente. |
 
