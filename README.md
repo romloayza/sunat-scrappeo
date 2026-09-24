@@ -1,781 +1,97 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name = "viewport" content = "initial-scale = 1.0, user-scalable = no">
-    <title>SUNAT - Consulta RUC</title>
+# Base consolidada de empresas contratistas de gobiernos regionales
 
-    <!-- Bootstrap -->
-    <link href="/a/js/libs/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+## Base principal
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    
-    <style type="text/css">
-        h1{
-                font-size: 1.7em;
-        }
-        .header div{
-                padding-left: 0 !important;
-        } 
-        .imgLogo{
-                height: 2.5em;
-                    margin-top: 1em;
-        }
-        .text-left-important{
-            text-align: left !important;
-        }
-        .cmbTipo{
-                font-size: 0.8em !important;
-        }
-        .divBotonera{
-                margin-bottom: 20px;
-        }
-        /*
-        .table > thead > tr:first-child > td, 
-                .table > tbody > tr:first-child > td {
-        */
-        .tblResultado > tbody > tr:first-child > td {
-                    border: none;
-                }
-        .divBotoneraArriba{
-                margin-bottom: 15px;
-        }
-        
-        
-        /********************************************************************/
-/*** PANEL PRIMARY ***/
-.with-nav-tabs.panel-primary .nav-tabs > li > a,
-.with-nav-tabs.panel-primary .nav-tabs > li > a:hover,
-.with-nav-tabs.panel-primary .nav-tabs > li > a:focus {
-    color: #fff;
-}
-.with-nav-tabs.panel-primary .nav-tabs > .open > a,
-.with-nav-tabs.panel-primary .nav-tabs > .open > a:hover,
-.with-nav-tabs.panel-primary .nav-tabs > .open > a:focus,
-.with-nav-tabs.panel-primary .nav-tabs > li > a:hover,
-.with-nav-tabs.panel-primary .nav-tabs > li > a:focus {
-        color: #fff;
-        background-color: #3071a9;
-        border-color: transparent;
-}
-.with-nav-tabs.panel-primary .nav-tabs > li.active > a,
-.with-nav-tabs.panel-primary .nav-tabs > li.active > a:hover,
-.with-nav-tabs.panel-primary .nav-tabs > li.active > a:focus {
-        color: #428bca;
-        background-color: #fff;
-        border-color: #428bca;
-        border-bottom-color: transparent;
-}
-.with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu {
-    background-color: #428bca;
-    border-color: #3071a9;
-}
-.with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > li > a {
-    color: #fff;   
-}
-.with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > li > a:hover,
-.with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > li > a:focus {
-    background-color: #3071a9;
-}
-.with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a,
-.with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a:hover,
-.with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a:focus {
-    background-color: #4a9fe9;
-}
-/*-------------------*/
-        
+El archivo principal del repositorio es:
 
-    </style>
-  </head>
-  <body>
-  
-        <form action="/cl-ti-itmrconsruc/jcrS00Alias" method="post" name="selecXNroRuc">
-                <input type="hidden" name="accion" value="consPorRazonSoc">
-                <input type="hidden" name="razSoc" value="">
-                <input type="hidden" name="contexto" value="ti-it">
-                <input type="hidden" name="modo" value="1">
-                <input type="hidden" name="tipdoc" value="1">
-                <input type="hidden" name="rbtnTipo" value="3">
-                <input type="hidden" name="search3" value="">
-                <input type="hidden" name="numRnd" value="">
-        </form>     
+`data/data_final_consolidada.csv`
 
+La unidad de observación es:
 
+**empresa (RUC) × gobierno regional (GORE) × año**
 
-        <div class="container">
-                <div class="header hidden" id="divHeader">
-                        <div class="col-md-12">
-                        <img src="/a/imagenes/logo_2015.png" class="imgLogo">
-                        </div>
-            </div> 
-            <div class="row">
-                <div class="col-md-12">
-                        <div>
-                                <h1>Consulta RUC</h1>
-                
-                        </div>
-                        <div class="divBotoneraArriba text-center hidden-print">                                 
+La base comprende los años 2021, 2022 y 2024 y combina información de contratación pública, características empresariales, antecedentes de proveedores e información institucional del GORE.
 
-                                                        <a href='FrameCriterioBusquedaWeb.jsp' class="hidden" id="aNuevaConsulta">Volver</a>                                     
-                                                        <button type="button" class="btn btn-danger btnNuevaConsulta">Volver</button>
+## Diccionario de datos
 
-                        </div>
-                
-                
-                            <div class="panel panel-primary">
-                                  <div class="panel-heading">Resultado de la Búsqueda</div>
-                                  <div class="list-group">
-                                        <!-- Inicio filas de datos -->
-                                         
-                                    <div class="list-group-item">
-                                        <div class="row">
-                                                <div class="col-sm-5">
-                                        <h4 class="list-group-item-heading">N&uacute;mero de RUC:</h4>
-                                 </div>
-                                 <div class="col-sm-7">
-                                        <h4 class="list-group-item-heading">20371672151 - APOYO COMUNICACION S.A.</h4>
-                                 </div>
-                                        </div>  
-                                </div>
-                                <div class="list-group-item">
-                                        <div class="row">
-                                                <div class="col-sm-5">
-                                        <h4 class="list-group-item-heading">Tipo Contribuyente:</h4>
-                                 </div>
-                                 <div class="col-sm-7">
-                                        <p class="list-group-item-text">SOCIEDAD ANONIMA</p>
-                                 </div>
-                                        </div>  
-                                </div>
-                                
-                                <div class="list-group-item">
-                                        <div class="row">
-                                                <div class="col-sm-5">
-                                        <h4 class="list-group-item-heading">Nombre Comercial:</h4>
-                                 </div>
-                                 <div class="col-sm-7">
-                                        <p class="list-group-item-text">APOYO COMUNICACION S.A.
-                                                      
-                                                    </p>
-                                 </div>
-                                        </div>  
-                                </div>
-                                 
-                                <div class="list-group-item">
-                                        <div class="row">
-                                                <div class="col-sm-3">
-                                        <h4 class="list-group-item-heading">Fecha de Inscripci&oacute;n:</h4>
-                                 </div>
-                                 <div class="col-sm-3">
-                                        <p class="list-group-item-text">25/06/1997</p>
-                                 </div>
-                                 
-                                 <div class="col-sm-3">
-                                        <h4 class="list-group-item-heading">Fecha de Inicio de Actividades:</h4>
-                                 </div>
-                                 <div class="col-sm-3">
-                                        <p class="list-group-item-text">01/07/1997</p>
-                                 </div>
-                                        </div>  
-                                </div>
-                                
-                                 
-                                <div class="list-group-item list-group-item-success">
-                                        <div class="row">
-                                                <div class="col-sm-5">
-                                        <h4 class="list-group-item-heading">Estado del Contribuyente:</h4>
-                                 </div>
-                                 <div class="col-sm-7">
-                                 
-                                        <p class="list-group-item-text">ACTIVO
-                                 
-                                                         
-                                                        
-                                        </p>
-                                 </div>
-                                        </div>  
-                                </div>
-                                
-                                
-                                
-                                <div class="list-group-item list-group-item-success">
-                                        <div class="row">
-                                                <div class="col-sm-5">
-                                        <h4 class="list-group-item-heading">Condici&oacute;n del Contribuyente:</h4>
-                                 </div>
-                                 <div class="col-sm-7">
-                                 
-                                        <p class="list-group-item-text">
-                                         
-                                                                HABIDO
-                                                              
+| Variable | Tipo | Definición / medición |
+|---|---|---|
+| `ruc` | Texto | Registro Único de Contribuyentes de la empresa. |
+| `razon_social` | Texto | Razón social registrada en SUNAT. |
+| `nombre_comercial` | Texto | Nombre comercial registrado en SUNAT. |
+| `anio` | Entero | Año de la observación contractual: 2021, 2022 o 2024. |
+| `gore` | Texto | Gobierno regional con el que la empresa registra contratación durante el año. |
+| `fecha_inscripcion` | Fecha | Fecha de inscripción del contribuyente en SUNAT. |
+| `fecha_inicio_actividades` | Fecha | Fecha de inicio de actividades registrada en SUNAT. |
+| `anio_inicio_actividades` | Entero | Año correspondiente a `fecha_inicio_actividades`. |
+| `antiguedad_empresa` | Entero | Años transcurridos entre el inicio de actividades y el año de análisis: `anio - anio_inicio_actividades`. |
+| `inicio_posterior_contratacion` | Binaria | Toma valor 1 cuando SUNAT registra una fecha de inicio de actividades posterior al año en que la empresa aparece contratando; 0 en caso contrario. |
+| `primer_anio_contratacion` | Entero | Primer año en que el RUC aparece en la base de contrataciones 2004-2024. |
+| `experiencia_contratacion` | Entero | Años transcurridos desde la primera contratación observada: `anio - primer_anio_contratacion`. |
+| `n_contratos` | Entero | Número de contratos distintos entre la empresa y el GORE durante el año. |
+| `n_gores_anio` | Entero | Número de GORE distintos con los que la empresa registra contratación durante ese año. |
+| `cmc` | Numérica | Capacidad Máxima de Contratación registrada para el proveedor. |
+| `n_contratos_cmc_evaluables` | Entero | Número de contratos empresa-GORE-año para los que existe información suficiente para comparar el monto contractual con el CMC. |
+| `n_supera_cmc` | Entero | Número de contratos cuyo monto es superior al CMC de la empresa. |
+| `prop_supera_cmc` | Numérica | Proporción de contratos evaluables que superan el CMC: `n_supera_cmc / n_contratos_cmc_evaluables`. |
+| `tipo_contribuyente` | Categórica | Tipo de contribuyente registrado en SUNAT. |
+| `estado` | Categórica | Estado del contribuyente registrado en SUNAT al momento de la consulta. |
+| `condicion` | Categórica | Condición del contribuyente registrada en SUNAT al momento de la consulta. |
+| `fecha_baja` | Fecha | Fecha de baja registrada en SUNAT, cuando corresponde. |
+| `domicilio` | Texto | Domicilio o ubicación registrada para el proveedor. |
+| `actividad_principal` | Texto | Actividad económica principal registrada en SUNAT. |
+| `cantidad_rubros` | Entero | Número de actividades económicas principales y secundarias registradas para el RUC. |
+| `actividades_economicas` | Texto | Listado completo de actividades económicas registradas para la empresa. |
+| `sanciones_tcp_acum` | Entero | Número acumulado de sanciones del Tribunal de Contrataciones Públicas disponible en la fuente de proveedores. |
+| `penalidades_acum` | Entero | Número acumulado de penalidades disponible para el proveedor. |
+| `inhabilitacion_judicial` | Entero / binaria | Registro de inhabilitación por mandato judicial disponible en la fuente. |
+| `inhabilitacion_administrativa` | Entero / binaria | Registro de inhabilitación administrativa disponible en la fuente. |
+| `fecha_consulta_sunat` | Fecha/hora | Fecha en que se realizó la consulta del RUC en SUNAT. |
+| `sunat_ok` | Binaria | Indicador de procesamiento de la consulta SUNAT. |
+| `tiene_info_sunat` | Binaria | Indicador de disponibilidad de información del RUC en la fuente SUNAT utilizada. |
+| `tiene_info_proveedores_estado` | Binaria | Indicador de disponibilidad del RUC en la fuente de proveedores del Estado. |
+| `puntaje_inco` | Numérica | Puntaje INCO correspondiente al GORE y año de la observación. |
+| `rango_inco` | Categórica | Rango asociado al puntaje INCO de la edición correspondiente. |
 
-                                                                </p>
-                                 </div>
-                                        </div>  
-                                </div>
-                                
-                                
-                                <div class="list-group-item">
-                                        <div class="row">
-                                                <div class="col-sm-5">
-                                        <h4 class="list-group-item-heading">Domicilio Fiscal:</h4>
-                                 </div>
-                                 <div class="col-sm-7">
-                                        <p class="list-group-item-text">AV. CAMINO REAL NRO. 390 DPTO. 802 URB.  CENTRO COMERCIAL CAMINO REAL  LIMA                                                                                                                               - LIMA                                                                                                                               - SAN ISIDRO</p>
-                                 </div>
-                                        </div>  
-                                </div>
-                                
-                                 
-                                <div class="list-group-item">
-                                        <div class="row">
-                                                <div class="col-sm-3">
-                                        <h4 class="list-group-item-heading">Sistema Emisión de Comprobante:</h4>
-                                 </div>
-                                 <div class="col-sm-3">
-                                        <p class="list-group-item-text">COMPUTARIZADO</p>
-                                 </div>
-                                 
-                                 <div class="col-sm-3">
-                                        <h4 class="list-group-item-heading">Actividad Comercio Exterior:</h4>
-                                 </div>
-                                 <div class="col-sm-3">
-                                        <p class="list-group-item-text">EXPORTADOR</p>
-                                 </div>
-                                        </div>  
-                                </div>
-                                
-                                <div class="list-group-item">
-                                        <div class="row">
-                                                <div class="col-sm-5">
-                                        <h4 class="list-group-item-heading">Sistema Contabilidad:</h4>
-                                 </div>
-                                 <div class="col-sm-7">
-                                        <p class="list-group-item-text">COMPUTARIZADO</p>
-                                 </div>
-                                        </div>  
-                                </div>
-                                
-                                
-                                
-                                <div class="list-group-item">
-                                        <div class="row">
-                                                <div class="col-sm-5">
-                                        <h4 class="list-group-item-heading">Actividad(es) Econ&oacute;mica(s):</h4>
-                                 </div>
-                                 <div class="col-sm-7">
-                                        <table class="table tblResultado">
-                                        <tbody>
-                            
-                                <tr><td>Principal    - 7020 - ACTIVIDADES DE CONSULTORÍA DE GESTIÓN</td></tr>
-                                <!--SC003-2015 Inicio-->
-                                
-                                <!--SC003-2015 Fin-->
-                                
-                                <!--SC003-2015 Fin-->
-                                
-                                
-                                                                        </tbody>
-                                    </table>
-                                 </div>
-                                        </div>  
-                                </div>
-                                
-                                
-                                
-                                <div class="list-group-item">
-                                        <div class="row">
-                                                <div class="col-sm-5">
-                                        <h4 class="list-group-item-heading">Comprobantes de Pago c/aut. de impresión (F. 806 u 816):</h4>
-                                 </div>
-                                 <div class="col-sm-7">
-                                        <table class="table tblResultado">
-                                        <tbody>
-                                         
-                                                                
-                                                                
-                                                                
-                                                                
-                                                                
-                                                                                <tr><td>FACTURA</td></tr>
-                                                                
-                                                                
-                                                                                <tr><td>BOLETA DE VENTA</td></tr>
-                                                                
-                                                                
-                                                                                <tr><td>NOTA DE CREDITO</td></tr>
-                                                                
-                                                                
-                                                                                <tr><td>NOTA DE DEBITO</td></tr>
-                                                                
-                                                                
-                                                                                <tr><td>GUIA DE REMISION - REMITENTE</td></tr>
-                                                                
-                                                                
-                                                                        </tbody>
-                                    </table>
-                                 </div>
-                                        </div>  
-                                </div>
-                                
-                                <div class="list-group-item">
-                                        <div class="row">
-                                                <div class="col-sm-5">
-                                        <h4 class="list-group-item-heading">Sistema de Emisi&oacute;n Electr&oacute;nica:</h4>
-                                 </div>
-                                 <div class="col-sm-7">
-                                 
-                                                
-                                                                <table class="table tblResultado">
-                                                        <tbody>
-                                                                
-                                                                
-                                                                
-                                                                                <tr><td>DESDE LOS SISTEMAS DEL CONTRIBUYENTE. AUTORIZ DESDE 20/10/2016</td></tr>
-                                                                
-                                                                             </tbody>
-                                                    </table>
-                                                
-                                 </div>
-                                        </div>  
-                                </div>
-                                
-                                <div class="list-group-item">
-                                        <div class="row">
-                                                <div class="col-sm-5">
-                                        <h4 class="list-group-item-heading">Emisor electr&oacute;nico desde:</h4>
-                                 </div>
-                                 <div class="col-sm-7">
-                                        <p class="list-group-item-text">20/10/2016</p>
-                                 </div>
-                                        </div>  
-                                </div>
-                                
-                                <div class="list-group-item">
-                                        <div class="row">
-                                                <div class="col-sm-5">
-                                        <h4 class="list-group-item-heading">Comprobantes Electr&oacute;nicos:</h4>
-                                 </div>
-                                 <div class="col-sm-7">
-                                        <p class="list-group-item-text">FACTURA (desde 20/10/2016),BOLETA (desde 20/10/2016)</p>
-                                 </div>
-                                        </div>  
-                                </div>
-                                
-                                <div class="list-group-item">
-                                        <div class="row">
-                                                <div class="col-sm-5">
-                                        <h4 class="list-group-item-heading">Afiliado al PLE desde:</h4>
-                                 </div>
-                                 <div class="col-sm-7">
-                                        <p class="list-group-item-text">01/01/2013</p>
-                                 </div>
-                                        </div>  
-                                </div>
-                                
-                                <div class="list-group-item">
-                                        <div class="row">
-                                                <div class="col-sm-5">
-                                        <h4 class="list-group-item-heading">Padrones:</h4>
-                                 </div>
-                                 <div class="col-sm-7">
-                                         <table class="table tblResultado">
-                                        <tbody>
-                                                                
-                                                       
-                                                                
-                                                                        
-                                                                                <tr><td>Excluido del R&eacute;gimen de Agentes de Retenci&oacute;n de IGV a partir del 01/02/2026</td></tr>
-                                                                        
-                                                                
-                                                                
+## Notas de medición
 
-                                                                                <!-- JRR - 20/09/2010 - Se añade cambio de Igor -->
+La combinación `ruc + anio + gore` identifica de manera única cada observación.
 
-                                                                
-                                                                
-                                                                
-                                                        </tbody>
-                                    </table>
-                                 </div>
-                                        </div>  
-                                </div>
-                                
-                                
-                                <!-- <div class="list-group-item">
-                                        <div class="row">
-                                                <div class="col-sm-5">
-                                        <h4 class="list-group-item-heading">Razón Social:</h4>
-                                 </div>
-                                 <div class="col-sm-7">
-                                        <p class="list-group-item-text">eeee</p>
-                                 </div>
-                                        </div>  
-                                </div> -->
-                                
-                                
-                                
-                                  </div><!-- fin list-group -->
-                                  
-                                  
-                                  <div class="panel-footer text-center">
-                                        <small>Fecha consulta: 17/08/2026 12:19</small>
-                                  </div><!-- fin footer del panel -->
-                                </div><!--fin panel-->
+`n_gores_anio` se calcula a nivel empresa-año. Por ello, si una empresa contrata con tres GORE durante un mismo año, el valor 3 se repite en las tres filas correspondientes.
 
+La superación del CMC se define como:
 
-                                <div class="text-center divBotonera hidden-print">
-                                                                         
-                                                        <button type="button" class="btn btn-danger btnNuevaConsulta">Volver</button>
+`monto_contrato > cmc`
 
-                        </div>
-                   
+Los valores faltantes de CMC se mantienen como faltantes y no se reemplazan por cero.
 
+En contratos asociados a más de una empresa, el monto contractual se conserva para comparar cada RUC con su CMC. No debe interpretarse como el monto individual efectivamente recibido por cada empresa.
 
-        <div class="list-group-item hidden-print">
-        <div class="row">
-                <div class="col-sm-4">
-                <form name="forminfoHist" method="post" action="/cl-ti-itmrconsruc/jcrS00Alias">
-                                        <button type="button" class="btn btn-primary btn-sm btnInfHis" >Informaci&oacute;n Hist&oacute;rica</button>
-                                        <input type="hidden" name="accion" value="getinfHis">
-                                        <input type="hidden" name="contexto" id="contexto" value="ti-it">                                 
-                                <input type="hidden" name="modo" id="modo" value="1"><!-- modo móvil -->
-                                    <input type="hidden" name="nroRuc" value="20371672151">
-                                    <input type="hidden" name="desRuc" value="APOYO COMUNICACION S.A.">
-                                </form>
-            </div>
-            <div class="col-sm-4">
-                <form name="formInfoDeudaCoactiva" method="post" action="/cl-ti-itmrconsruc/jcrS00Alias">
-                              <button type="button" class="btn btn-primary btn-sm btnInfDeuCoa"">Deuda Coactiva</button>          
-                              <input type="hidden" name="accion" value="getInfoDC">
-                              <input type="hidden" name="contexto" id="contexto" value="ti-it">                                   
-                          <input type="hidden" name="modo" id="modo" value="1"><!-- modo móvil -->
-                              <input type="hidden" name="nroRuc" value="20371672151">
-                              <input type="hidden" name="desRuc" value="APOYO COMUNICACION S.A.">
-                                </form>
-            </div>
-            <div class="col-sm-4">
-                <form name="formInfoOmisionTributaria" method="post" action="/cl-ti-itmrconsruc/jcrS00Alias">
-                              <button type="button" class="btn btn-primary btn-sm btnInfOmiTri">Omisiones Tributarias</button>   
-                              <input type="hidden" name="accion" value="getInfoOT">
-                              <input type="hidden" name="contexto" id="contexto" value="ti-it">                                   
-                          <input type="hidden" name="modo" id="modo" value="1"><!-- modo móvil -->
-                              <input type="hidden" name="nroRuc" value="20371672151">
-                              <input type="hidden" name="desRuc" value="APOYO COMUNICACION S.A.">
-                                </form>
-            </div>
-            
-        </div>  
-        <br>
-        <div class="row">
-                <div class="col-sm-4">
-                <form name="formNumTrabajd" method="post" action="/cl-ti-itmrconsruc/jcrS00Alias">
-                              <button type="button" class="btn btn-primary btn-sm btnInfNumTra">Cantidad de Trabajadores y/o Prestadores de Servicio</button>  
-                              <input type="hidden" name="accion" value="getCantTrab">
-                              <input type="hidden" name="contexto" id="contexto" value="ti-it">                                   
-                                  <input type="hidden" name="modo" id="modo" value="1"><!-- modo móvil -->
-                              <input type="hidden" name="nroRuc" value="20371672151">
-                              <input type="hidden" name="desRuc" value="APOYO COMUNICACION S.A.">
-                                </form>
-            </div>
-            
-                <div class="col-sm-4">
-                        <form name="formActPro" method="post" action="/cl-ti-itmrconsruc/jcrS00Alias">
-                                <button type="button" class="btn btn-primary btn-sm btnInfActPro">Actas Probatorias</button>
-                                <input type="hidden" name="accion" value="getActPro">
-                                <input type="hidden" name="contexto" id="contexto" value="ti-it">                                 
-                                    <input type="hidden" name="modo" id="modo" value="1"><!-- modo móvil -->
-                                <input type="hidden" name="desRuc" value="APOYO COMUNICACION S.A.">           
-                                <input type="hidden" name="nroRuc" value="20371672151">
-                        </form>
-                </div>
-    
-    
-                <div class="col-sm-4">
-                        <form name="formActCPF" method="post" action="/cl-ti-itmrconsruc/jcrS00Alias">
-                               <button type="button" class="btn btn-primary btn-sm btnInfActCPF">Facturas Fisicas</button>
-                               <input type="hidden" name="accion" value="getActCPF">
-                               <input type="hidden" name="contexto" id="contexto" value="ti-it">                                  
-                                   <input type="hidden" name="modo" id="modo" value="1"><!-- modo móvil -->
-                               <input type="hidden" name="desRuc" value="APOYO COMUNICACION S.A.">           
-                               <input type="hidden" name="nroRuc" value="20371672151">
-                                </form>
-    
-                </div>
-    
-        </div>
-    
-       
-        <br>
-        <div class="row">
-    
-    
-    
-        <div class="col-sm-4">
-                        <form name="formActReaPeru" method="post" action="/cl-ti-itmrconsruc/jcrS00Alias">
-                               <button type="button" class="btn btn-primary btn-sm btnInfReaPer">Reactiva Perú : Deuda en cobranza coactiva</button>
-                               <input type="hidden" name="accion" value="getReactivaPeru">
-                               <input type="hidden" name="contexto" id="contexto" value="ti-it">                                  
-                                   <input type="hidden" name="modo" id="modo" value="1"><!-- modo móvil -->
-                               <input type="hidden" name="desRuc" value="APOYO COMUNICACION S.A.">           
-                               <input type="hidden" name="nroRuc" value="20371672151">
-                                </form>    
-                </div>
-    
-       
-    
-    
-      
-                <div class="col-sm-4">
-                        <form name="formCovid" method="post" action="/cl-ti-itmrconsruc/jcrS00Alias">
-                               <button type="button" class="btn btn-primary btn-sm btnInfCovid">Programa de garantías COVID_19 : Deuda en cobranza coactiva</button>
-                               <input type="hidden" name="accion" value="getPGarantiaCOVID19">
-                               <input type="hidden" name="contexto" id="contexto" value="ti-it">                                  
-                                   <input type="hidden" name="modo" id="modo" value="1"><!-- modo móvil -->
-                               <input type="hidden" name="desRuc" value="APOYO COMUNICACION S.A.">           
-                               <input type="hidden" name="nroRuc" value="20371672151">
-                                </form>    
-                </div>
-                 
-                 
-    
-    
-                <div class="col-sm-4">
-                   <form name="formRepLeg" method="post" action="/cl-ti-itmrconsruc/jcrS00Alias">
-                        <button type="button" class="btn btn-primary btn-sm btnInfRepLeg">Representante(s) Legal(es)</button>
-                        <input type="hidden" name="accion" value="getRepLeg">
-                        <input type="hidden" name="contexto" id="contexto" value="ti-it">                                 
-                            <input type="hidden" name="modo" id="modo" value="1"><!-- modo móvil -->
-                        <input type="hidden" name="desRuc" value="APOYO COMUNICACION S.A.">           
-                        <input type="hidden" name="nroRuc" value="20371672151">
-                      </form>    
-                </div>    
-    
-        </div>
-        <br>
-        <div class="row">
-    
-                <div class="col-sm-12">
-                        <form name="formLocAnex" method="post" action="/cl-ti-itmrconsruc/jcrS00Alias">
-                            <button type="button" class="btn btn-primary btn-sm btnInfLocAnex">Establecimiento(s) Anexo(s)</button>
-                            <input type="hidden" name="accion" value="getLocAnex">
-                            <input type="hidden" name="contexto" id="contexto" value="ti-it">                             
-                                    <input type="hidden" name="modo" id="modo" value="1"><!-- modo móvil -->
-                                    <input type="hidden" name="nroRuc" value="20371672151">
-                            <input type="hidden" name="desRuc" value="APOYO COMUNICACION S.A.">
-                       </form>    
-                </div>
-    
-        </div>   
+`primer_anio_contratacion` y `experiencia_contratacion` se construyen a partir de la base disponible de contrataciones 2004-2024. Por ello, representan experiencia contractual observada en la fuente.
 
-                <input type="hidden" name="accion" value="20371672151">
-                <input type="hidden" name="razSoc" value="APOYO COMUNICACION S.A.">
+Las variables `estado`, `condicion`, `tipo_contribuyente`, `actividad_principal` y otras características SUNAT corresponden a la información disponible al momento de la consulta y no necesariamente al estado histórico de la empresa en 2021, 2022 o 2024.
 
-        </div>
+Las variables `sanciones_tcp_acum` y `penalidades_acum` son valores acumulados. Al no disponer de la fecha individual de cada sanción o penalidad, no deben interpretarse como antecedentes existentes necesariamente en el año específico de contratación.
 
-        <div class="list-group-item hidden-print">
-        <div class="row">
-                <div class="col-md-6 text-right">    
-                        <button class="btn btn-primary" onclick="imprimir()">
-                                <span class="glyphicon glyphicon-print"></span>
-                                Imprimir
-                        </button>
-                </div>
-    
-                <div class="col-md-6">
-                        <form class="form-inline" action="/cl-ti-itmrconsruc/jcrS00Alias" method="post" name="formEnviar">
-                                <!--inicio modificacion rmanriq1-->
-                                <input type="hidden" name="nroRuc" value="20371672151">
-                        <input type="hidden" name="desRuc" value="APOYO COMUNICACION S.A.">
-                                <!--fin modificacion rmanriq1-->
-                                        <input type="hidden" name="accion" value="enviar">
-                                        <input type="hidden" name="pagina" value="datosRuc" >
-                                        <input type="hidden" name="correo" value="">
-                                        <input type="email" name="email" required="required" placeholder="Ingresar Email">
-                                        <button type="submit" class="btn btn-primary" value="enviar">
-                                                <span class="glyphicon glyphicon-envelope"></span>
-                                                e-mail
-                                        </button>
-                        </form>
-                    
-                    </div>
-    
-        </div>
-    </div>     
-                   
+El INCO se incorpora a nivel `GORE × año`. Se utilizan únicamente los registros `SEDE CENTRAL`, se excluye Lima Metropolitana y se conserva Lima Provincias como Gobierno Regional de Lima.
 
-            </div><!--fin col-->
-            </div><!--fin row-->
-                <footer class="footer text-center">
-                        <div class="col-md-12">
-                                <p><small>&copy; 1997 - 2026 SUNAT Derechos Reservados</small></p>
-                        </div>
-                </footer>
-        </div><!--fin container--> 
+## Estructura del repositorio
 
+```text
+data/
+├── insumos_originales/
+├── bases_intermedias/
+└── data_final_consolidada.csv
 
-    <script src="/a/js/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="/a/js/libs/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-    <script>
-        $( document ).ready(function() {
-                $.ajaxSetup({ scriptCharset: "utf-8" , contentType: "application/json; charset=utf-8"});
-            jQuery.support.cors = true;
+scripts/
+├── 01_consolidado_info_empresas.py
+├── 02_empresa_gore_anio_base.py
+├── 03_consolidar_empresa_gore_anio.py
+├── 04_agregar_inco.py
+└── 05_validacion_base_maestra.py
 
-            iniciaVariables();
-            iniciaBotones(); 
-        });
-    
-         
-        /*Funciones usadas por la aplicación*/
-        function iniciaBotones(){
-            //resetea estado inicial del formulario
-                $(".btnNuevaConsulta").bind('click',function(event){
-                        regresa();
-
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        return false;
-                });  
-        
-        
-                //resetea estado inicial del formulario
-                $(".btnInfHis").bind('click',function(event){
-                        document.forminfoHist.submit();
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        return false;
-                });
-        
-                //resetea estado inicial del formulario
-                $(".btnInfDeuCoa").bind('click',function(event){
-                        document.formInfoDeudaCoactiva.submit();
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        return false;
-                });  
-        
-                //resetea estado inicial del formulario
-                $(".btnInfOmiTri").bind('click',function(event){
-                        document.formInfoOmisionTributaria.submit();
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        return false;
-                });  
-        
-                //resetea estado inicial del formulario
-                $(".btnInfNumTra").bind('click',function(event){
-                        document.formNumTrabajd.submit();
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        return false;
-                });  
-        
-                //resetea estado inicial del formulario
-                $(".btnInfActPro").bind('click',function(event){
-                        document.formActPro.submit();
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        return false;
-                });  
-        
-                //resetea estado inicial del formulario
-                $(".btnInfActCPF").bind('click',function(event){
-                        document.formActCPF.submit();
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        return false;
-                });  
-        
-                //resetea estado inicial del formulario
-                $(".btnInfReaPer").bind('click',function(event){
-                        document.formActReaPeru.submit();
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        return false;
-                });  
-        
-                //resetea estado inicial del formulario
-                $(".btnInfCovid").bind('click',function(event){
-                        document.formCovid.submit();
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        return false;
-                });  
-        
-                //resetea estado inicial del formulario
-                $(".btnInfRepLeg").bind('click',function(event){
-                        document.formRepLeg.submit();
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        return false;
-                });  
-        
-                //resetea estado inicial del formulario
-                $(".btnInfLocAnex").bind('click',function(event){
-                        document.formLocAnex.submit();
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        return false;
-                });  
-        
-        
-                //resetea estado inicial del formulario
-        //(".btnPrueba").bind('click',function(event){
-        //              document.formPrueba.submit();
-        //              event.preventDefault();
-        //              event.stopImmediatePropagation();
-        //              return false;
-                //});  
-            
-        }
-
-        function regresa(){
-    
-                                var href = $("#aNuevaConsulta").attr('href');
-                        window.location.href = href;
-                            
-    
-        }
-    
-        function regresa1(){    
-                document.forminfoHist.submit();
-    
-        }
-
-        function irHome(){
-                regresa();
-        }
-
-        /*Variables del app*/
-
-    
-        /*Declarar variables*/
-
-        /*Iniciar variables*/
-        function iniciaVariables(){
-        }
-    
-    
-          
-        </script>
-
-
-
-    <script src="/a/js/apps/workspace/ws.js"></script>
-    
-    
-    <script type="text/javascript">
-        function imprimir(){
-                window.print();
-        }
-    
-    </script>
-  </body>
-</html>
+scrappeo/
+├── scrape_sunat.py
+├── scrape_rucs_2021_2022_2024.py
+├── limpieza_rucs.py
+└── intento1.py
