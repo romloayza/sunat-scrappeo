@@ -25,9 +25,6 @@ La base comprende los años 2021, 2022 y 2024 y combina información de contrata
 | `fecha_inicio_actividades` | Fecha | Fecha de inicio de actividades registrada en SUNAT. |
 | `anio_inicio_actividades` | Entero | Año correspondiente a `fecha_inicio_actividades`. |
 | `antiguedad_empresa` | Entero | Años transcurridos entre el inicio de actividades y el año de análisis: `anio - anio_inicio_actividades`. |
-| `inicio_posterior_contratacion` | Binaria | Toma valor 1 cuando SUNAT registra una fecha de inicio de actividades posterior al año en que la empresa aparece contratando; 0 en caso contrario. |
-| `primer_anio_contratacion` | Entero | Primer año en que el RUC aparece en la base de contrataciones 2004-2024. |
-| `experiencia_contratacion` | Entero | Años transcurridos desde la primera contratación observada: `anio - primer_anio_contratacion`. |
 | `n_contratos` | Entero | Número de contratos distintos entre la empresa y el GORE durante el año. |
 | `n_gores_anio` | Entero | Número de GORE distintos con los que la empresa registra contratación durante ese año. |
 | `cmc` | Numérica | Capacidad Máxima de Contratación registrada para el proveedor. |
