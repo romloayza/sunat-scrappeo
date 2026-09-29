@@ -1,90 +1,48 @@
-# Base consolidada de empresas contratistas de gobiernos regionales
+# Base de datos de contrataciones públicas empresa–GORE
 
-## Base principal
+La base principal del proyecto es:
 
-El archivo principal del repositorio es:
+`data/data_final.csv`
 
-`data/data_final_consolidada.csv`
+Cada fila representa una contratación o proyecto correspondiente a los años 2021, 2022 o 2024.
 
-La unidad de observación es:
+La estructura general es:
 
-**empresa (RUC) × gobierno regional (GORE) × año**
+`id | gore | monto | fecha | ruc1 | ruc2 | ... | ruc9`
 
-La base comprende los años 2021, 2022 y 2024 y combina información de contratación pública, características empresariales, antecedentes de proveedores e información institucional del GORE.
+Cada columna `ruc1` a `ruc9` contiene un objeto JSON con información de la empresa participante y sus métricas de red.
 
 ## Diccionario de datos
 
-| Variable | Tipo | Definición / medición |
-|---|---|---|
-| `ruc` | Texto | Registro Único de Contribuyentes de la empresa. |
-| `razon_social` | Texto | Razón social registrada en SUNAT. |
-| `nombre_comercial` | Texto | Nombre comercial registrado en SUNAT. |
-| `anio` | Entero | Año de la observación contractual: 2021, 2022 o 2024. |
-| `gore` | Texto | Gobierno regional con el que la empresa registra contratación durante el año. |
-| `fecha_inscripcion` | Fecha | Fecha de inscripción del contribuyente en SUNAT. |
-| `fecha_inicio_actividades` | Fecha | Fecha de inicio de actividades registrada en SUNAT. |
-| `anio_inicio_actividades` | Entero | Año correspondiente a `fecha_inicio_actividades`. |
-| `antiguedad_empresa` | Entero | Años transcurridos entre el inicio de actividades y el año de análisis: `anio - anio_inicio_actividades`. |
-| `n_contratos` | Entero | Número de contratos distintos entre la empresa y el GORE durante el año. |
-| `n_gores_anio` | Entero | Número de GORE distintos con los que la empresa registra contratación durante ese año. |
-| `cmc` | Numérica | Capacidad Máxima de Contratación registrada para el proveedor. |
-| `n_contratos_cmc_evaluables` | Entero | Número de contratos empresa-GORE-año para los que existe información suficiente para comparar el monto contractual con el CMC. |
-| `n_supera_cmc` | Entero | Número de contratos cuyo monto es superior al CMC de la empresa. |
-| `prop_supera_cmc` | Numérica | Proporción de contratos evaluables que superan el CMC: `n_supera_cmc / n_contratos_cmc_evaluables`. |
-| `tipo_contribuyente` | Categórica | Tipo de contribuyente registrado en SUNAT. |
-| `estado` | Categórica | Estado del contribuyente registrado en SUNAT al momento de la consulta. |
-| `condicion` | Categórica | Condición del contribuyente registrada en SUNAT al momento de la consulta. |
-| `fecha_baja` | Fecha | Fecha de baja registrada en SUNAT, cuando corresponde. |
-| `domicilio` | Texto | Domicilio o ubicación registrada para el proveedor. |
-| `actividad_principal` | Texto | Actividad económica principal registrada en SUNAT. |
-| `cantidad_rubros` | Entero | Número de actividades económicas principales y secundarias registradas para el RUC. |
-| `actividades_economicas` | Texto | Listado completo de actividades económicas registradas para la empresa. |
-| `sanciones_tcp_acum` | Entero | Número acumulado de sanciones del Tribunal de Contrataciones Públicas disponible en la fuente de proveedores. |
-| `penalidades_acum` | Entero | Número acumulado de penalidades disponible para el proveedor. |
-| `inhabilitacion_judicial` | Entero | Registro de inhabilitación por mandato judicial disponible en la fuente. |
-| `inhabilitacion_administrativa` | Entero | Registro de inhabilitación administrativa disponible en la fuente. |
-| `puntaje_inco` | Numérica | Puntaje INCO correspondiente al GORE y año de la observación. |
-| `rango_inco` | Categórica | Rango asociado al puntaje INCO de la edición correspondiente. |
+### Variables del proyecto
 
-## Notas de medición
+| Variable | Descripción |
+|---|---|
+| `id` | Identificador único del proyecto. |
+| `gore` | Gobierno Regional asociado a la contratación. |
+| `monto` | Monto total registrado para el proyecto. Si participan varias empresas, no se conoce qué proporción corresponde a cada una. |
+| `fecha` | Fecha de la contratación. |
+| `ruc1` – `ruc9` | Empresas participantes en el proyecto. Cada celda contiene un objeto JSON con los atributos de la empresa. |
 
-La combinación `ruc + anio + gore` identifica de manera única cada observación.
+### Variables dentro de cada RUC
 
-`n_gores_anio` se calcula a nivel empresa-año. Por ello, si una empresa contrata con tres GORE durante un mismo año, el valor 3 se repite en las tres filas correspondientes.
-
-La superación del CMC se define como:
-
-`monto_contrato > cmc`
-
-Los valores faltantes de CMC se mantienen como faltantes y no se reemplazan por cero.
-
-En contratos asociados a más de una empresa, el monto contractual se conserva para comparar cada RUC con su CMC. No debe interpretarse como el monto individual efectivamente recibido por cada empresa.
-
-`primer_anio_contratacion` y `experiencia_contratacion` se construyen a partir de la base disponible de contrataciones 2004-2024. Por ello, representan experiencia contractual observada en la fuente.
-
-Las variables `estado`, `condicion`, `tipo_contribuyente`, `actividad_principal` y otras características SUNAT corresponden a la información disponible al momento de la consulta y no necesariamente al estado histórico de la empresa en 2021, 2022 o 2024.
-
-Las variables `sanciones_tcp_acum` y `penalidades_acum` son valores acumulados. Al no disponer de la fecha individual de cada sanción o penalidad, no deben interpretarse como antecedentes existentes necesariamente en el año específico de contratación.
-
-El INCO se incorpora a nivel `GORE × año`. Se utilizan únicamente los registros `SEDE CENTRAL`, se excluye Lima Metropolitana y se conserva Lima Provincias como Gobierno Regional de Lima.
-
-## Estructura del repositorio
-
-```text
-data/
-├── insumos_originales/
-├── bases_intermedias/
-└── data_final_consolidada.csv
-
-scripts/
-├── 01_consolidado_info_empresas.py
-├── 02_empresa_gore_anio_base.py
-├── 03_consolidar_empresa_gore_anio.py
-├── 04_agregar_inco.py
-└── 05_validacion_base_maestra.py
-
-scrappeo/
-├── scrape_sunat.py
-├── scrape_rucs_2021_2022_2024.py
-├── limpieza_rucs.py
-└── intento1.py
+| Variable | Descripción |
+|---|---|
+| `ruc` | Registro Único de Contribuyentes de la empresa. Funciona como identificador. |
+| `antiguedad_empresa` | Número de años entre el inicio de actividades registrado en SUNAT y el año de la contratación. |
+| `cmc` | Capacidad Máxima de Contratación registrada para la empresa. |
+| `cantidad_rubros` | Cantidad de actividades económicas registradas para la empresa en SUNAT. |
+| `actividad_principal` | Actividad económica principal registrada en SUNAT. |
+| `penalidades_acum` | Número acumulado de penalidades registrado para la empresa. No se dispone de la fecha individual de cada penalidad. |
+| `sanciones_tcp_acum` | Número acumulado de sanciones registrado para la empresa. No se dispone de la fecha individual de cada sanción. |
+| `estado` | Estado del contribuyente registrado en SUNAT al momento de la consulta. |
+| `condicion` | Condición del contribuyente registrada en SUNAT al momento de la consulta. |
+| `degree_centrality` | Centralidad de grado normalizada de la empresa en la red empresa–GORE del año. Mide la proporción de GORE presentes en la red anual con los que la empresa está conectada. |
+| `weighted_degree` | Número total de participaciones contractuales de la empresa durante el año. Considera la repetición de contratos con un mismo GORE. |
+| `closeness_centrality` | Centralidad de cercanía de la empresa en la red anual. Mide su cercanía estructural respecto de los demás nodos alcanzables de la red. |
+| `hhi_gore` | Índice Herfindahl–Hirschman del GORE en el año. Mide la concentración de las participaciones contractuales entre sus empresas proveedoras. |
+| `supplier_share_gore` | Mayor participación contractual de una empresa dentro del total de participaciones del GORE en ese año. |
+| `dependencia_empresa_gore` | Proporción de las contrataciones anuales de la empresa que corresponden al GORE del proyecto. |
+| `dependencia_gore_empresa` | Proporción de las participaciones contractuales del GORE que corresponden a esa empresa. |
+| `duracion_vinculo` | Número de períodos observados —2021, 2022 y 2024— en los que aparece la relación entre la misma empresa y el mismo GORE. |
+| `n_gores_atendidos` | Número de Gobiernos Regionales distintos con los que la empresa tuvo al menos una contratación considerando conjuntamente 2021, 2022 y 2024. |
